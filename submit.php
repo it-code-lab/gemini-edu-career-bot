@@ -2,13 +2,18 @@
 $conn = new mysqli("localhost", "your_user", "your_password", "your_db");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $intent = $conn->real_escape_string($_POST['intent']);
-    $theme  = $conn->real_escape_string($_POST['theme']);
-    $utype  = $conn->real_escape_string($_POST['utype']);
-    $stage  = $conn->real_escape_string($_POST['stage']);
-    $query  = $conn->real_escape_string($_POST['query']);
-    $lang   = $conn->real_escape_string($_POST['lang']);
-    $anon   = isset($_POST['anon']) ? 1 : 0;
+    $intent  = $conn->real_escape_string($_POST['intent']);
+    $theme   = $conn->real_escape_string($_POST['theme']);
+    $utype   = $conn->real_escape_string($_POST['utype']);
+    $stage   = $conn->real_escape_string($_POST['stage']);
+    $query   = $conn->real_escape_string($_POST['query']);
+    $lang    = $conn->real_escape_string($_POST['lang']);
+    $anon    = isset($_POST['anon']) ? 1 : 0;
+    
+    // New Optional Fields
+    $u_name   = $conn->real_escape_string($_POST['user_name']);
+    $u_email  = $conn->real_escape_string($_POST['user_email']);
+    $u_region = $conn->real_escape_string($_POST['user_region']);
     
     $audioPath = "";
     if (isset($_FILES['audio_file'])) {
@@ -18,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $sql = "INSERT INTO career_hub_submissions (intent, theme, user_type, stage, query_text, audio_path, lang, can_feature) 
-            VALUES ('$intent', '$theme', '$utype', '$stage', '$query', '$audioPath', '$lang', $anon)";
+    $sql = "INSERT INTO career_hub_submissions (intent, theme, user_type, stage, query_text, audio_path, lang, can_feature, user_name, user_email, user_region) 
+            VALUES ('$intent', '$theme', '$utype', '$stage', '$query', '$audioPath', '$lang', $anon, '$u_name', '$u_email', '$u_region')";
 
     if ($conn->query($sql)) {
         http_response_code(200);

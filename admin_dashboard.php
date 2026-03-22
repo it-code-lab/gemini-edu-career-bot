@@ -48,6 +48,12 @@ $result = $conn->query("SELECT * FROM community_vault ORDER BY created_at DESC")
             <tr>
                 <td><?php echo date('M d, Y', strtotime($row['created_at'])); ?></td>
                 <td>
+                    <strong><?php echo htmlspecialchars($row['user_name'] ?: 'Anonymous'); ?></strong> 
+                    <?php if($row['user_region']): ?>
+                        <small>(<?php echo htmlspecialchars($row['user_region']); ?>)</small>
+                    <?php endif; ?><br>
+                    <small><?php echo htmlspecialchars($row['user_email']); ?></small><br>
+                    <hr style="border:0; border-top:1px solid #eee; margin:5px 0;">
                     <strong><?php echo htmlspecialchars($row['user_type']); ?></strong><br>
                     <small><?php echo htmlspecialchars($row['current_stage']); ?></small>
                     <?php if($row['can_feature']): ?> 
